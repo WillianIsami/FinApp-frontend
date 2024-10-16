@@ -1,28 +1,48 @@
 import { Component } from '@angular/core';
-import { Router } from '@angular/router';
 import { AuthService } from '../../../../core/services/auth.service';
+import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { ToastrService } from 'ngx-toastr';
+import { Router } from '@angular/router';
+import { PrimaryInputComponent } from '../../components/primary-input/primary-input.component';
+
+interface UserForm {
+  username: FormControl,
+  email: FormControl,
+  password: FormControl
+}
 
 @Component({
-  selector: 'app-login',
+  standalone: true,
+  imports: [
+    ReactiveFormsModule,
+    PrimaryInputComponent
+  ],
   templateUrl: './login.component.html',
-  styleUrls: ['./login.component.scss']
+  styleUrl: './login.component.scss'
 })
 export class LoginComponent {
-  username: string = '';
-  password: string = '';
-  errorMessage: string = '';
+  userForm!: FormGroup<UserForm>;
 
-  constructor(private authService: AuthService, private router: Router) {}
+  constructor(
+    private authService: AuthService,
+    private toastService: ToastrService,
+    private router: Router,
+  ) {
+    this.userForm = new FormGroup({
+      username: new FormControl('', [Validators.required]),
+      email: new FormControl('', [Validators.required, Validators.email]),
+      password: new FormControl('', [Validators.required, Validators.minLength(6)])
+    })
+  }
 
-  login(): void {
-    this.authService.login({ username: this.username, password: this.password }).subscribe(
-      response => {
-        localStorage.setItem('token', response.token);
-        this.router.navigate(['/dashboard']);
-      },
-      error => {
-        this.errorMessage = 'Invalid username or password';
-      }
-    );
+  login() {
+    this.authService.login(this.userForm.value.username, this.userForm.value.email, this.userForm.value.password).subscribe({
+      next: () => this.toastService.success("Login successful"),
+      error: () => this.toastService.error("Unexpected error! Please try again later")
+    });
+  }
+
+  navigate() {
+    this.router.navigate(["signup"]);
   }
 }

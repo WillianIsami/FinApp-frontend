@@ -1,16 +1,31 @@
-<div class="register-container">
-  <h2>Register</h2>
-  <form (ngSubmit)="signup()">
-    <div>
-      <label for="username">Username</label>
-      <input type="text" id="username" [(ngModel)]="username" name="username" required>
-    </div>
-    <div>
-      <label for="password">Password</label>
-      <input type="password" id="password" [(ngModel)]="password" name="password" required>
-    </div>
-    <div *ngIf="errorMessage" class="error">{{ errorMessage }}</div>
-    <button type="submit">Register</button>
-    <a routerLink="/login">Already have an account? Login here.</a>
+<div class="login-container">
+  <h2>SignUp</h2>
+  <form [formGroup]="userForm">
+    <app-primary-input
+      formControlName="username"
+      inputName="username"
+      type="text"
+      label="Username"
+      placeholder="Your name here"
+    >
+    </app-primary-input>
+    <app-primary-input
+      formControlName="email"
+      inputName="email"
+      type="email"
+      label="Email"
+      placeholder="example@gmail.com"
+    >
+    </app-primary-input>
+    <app-primary-input
+      formControlName="password"
+      inputName="password"
+      type="password"
+      label="Password"
+      placeholder="Your password here"
+    >
+    </app-primary-input>
+    <button class="btn-primary" (click)="signup()" [disabled]="!userForm.valid">Update Profile</button>
   </form>
+  <button class="btn-secondary" (click)="navigate()">Already have an account? Login here.</button>
 </div>

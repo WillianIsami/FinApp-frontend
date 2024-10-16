@@ -1,27 +1,53 @@
-import { Component } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthService } from '../../../../core/services/auth.service';
+import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { ToastrService } from 'ngx-toastr';
+import { PrimaryInputComponent } from '../../components/primary-input/primary-input.component';
+
+interface UserForm {
+  username: FormControl,
+  email: FormControl,
+  password: FormControl
+}
 
 @Component({
   selector: 'app-signup',
+  standalone: true,
+  imports: [
+    ReactiveFormsModule,
+    PrimaryInputComponent,
+  ],
   templateUrl: './signup.component.html',
-  styleUrls: ['./signup.component.scss']
+  styleUrl: './signup.component.scss'
 })
+
 export class SignUpComponent {
-  username: string = '';
-  password: string = '';
-  errorMessage: string = '';
+  @Input() errorMessage: string = '';
+  @Output() onSubmit = new EventEmitter();
+  userForm!: FormGroup<UserForm>;
 
-  constructor(private authService: AuthService, private router: Router) {}
+  constructor(
+    private authService: AuthService,
+    private toastService: ToastrService,
+    private router: Router,
+  ) {
+    this.userForm = new FormGroup({
+      username: new FormControl('', [Validators.required]),
+      email: new FormControl('', [Validators.required, Validators.email]),
+      password: new FormControl('', [Validators.required, Validators.minLength(6)])
+    })
+  }
 
-  signup(): void {
-    this.authService.signup({ username: this.username, password: this.password }).subscribe(
-      response => {
-        this.router.navigate(['/login']);
-      },
-      error => {
-        this.errorMessage = 'Registration failed. Please try again.';
-      }
+  signup() {
+    this.authService.signup(this.userForm.value.username, this.userForm.value.email, this.userForm.value.password ).subscribe({
+      next: () => this.toastService.success("SignUp successful"),
+      error: () => this.toastService.error("Unexpected error! Please try again later")
+    }
     );
+  }
+
+  navigate() {
+    this.router.navigate([""])
   }
 }
