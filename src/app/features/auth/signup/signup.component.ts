@@ -1,9 +1,9 @@
-import { Component } from '@angular/core';
-import { AuthService } from '../../../../core/services/auth.service';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Router } from '@angular/router';
+import { AuthService } from '../../../core/services/auth.service';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
-import { Router } from '@angular/router';
-import { PrimaryInputComponent } from '../../components/primary-input/primary-input.component';
+import { PrimaryInputComponent } from '../components/primary-input/primary-input.component';
 
 interface UserForm {
   username: FormControl,
@@ -12,15 +12,19 @@ interface UserForm {
 }
 
 @Component({
+  selector: 'app-signup',
   standalone: true,
   imports: [
     ReactiveFormsModule,
-    PrimaryInputComponent
+    PrimaryInputComponent,
   ],
-  templateUrl: './login.component.html',
-  styleUrl: './login.component.scss'
+  templateUrl: './signup.component.html',
+  styleUrl: './signup.component.scss'
 })
-export class LoginComponent {
+
+export class SignUpComponent {
+  @Input() errorMessage: string = '';
+  @Output() onSubmit = new EventEmitter();
   userForm!: FormGroup<UserForm>;
 
   constructor(
@@ -35,14 +39,15 @@ export class LoginComponent {
     })
   }
 
-  login() {
-    this.authService.login(this.userForm.value.username, this.userForm.value.email, this.userForm.value.password).subscribe({
-      next: () => this.toastService.success("Login successful"),
+  signup() {
+    this.authService.signup(this.userForm.value.username, this.userForm.value.email, this.userForm.value.password ).subscribe({
+      next: () => this.toastService.success("SignUp successful"),
       error: () => this.toastService.error("Unexpected error! Please try again later")
-    });
+    }
+    );
   }
 
   navigate() {
-    this.router.navigate(["signup"]);
+    this.router.navigate(["auth/login"])
   }
 }

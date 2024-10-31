@@ -1,14 +1,23 @@
 import { Routes } from '@angular/router';
-import { SignUpComponent } from './features/auth/pages/signup/signup.component';
-import { LoginComponent } from './features/auth/pages/login/login.component';
+import { AuthGuard } from './core/guards/auth.guard';
+import { SignUpComponent } from './features/auth/signup/signup.component';
+import { LoginComponent } from './features/auth/login/login.component';
 
 export const routes: Routes = [
   {
     path: "",
-    component: LoginComponent
+    redirectTo: "auth/login",
+    pathMatch: "full"
   },
   {
-    path: "signup",
-    component: SignUpComponent
+    path: "auth",
+    loadChildren: () =>
+      import('./features/auth/auth-routing.module').then(m => m.AuthRoutingModule)
+  },
+  {
+    path: "seller",
+    // canActivate: [AuthGuard],
+    // data: { expectedRole: 'SELLER' },
+    component: LoginComponent
   },
 ];

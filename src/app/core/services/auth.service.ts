@@ -22,25 +22,35 @@ export class AuthService {
     return this.http.post<LoginResponse>(`${this.baseUrl}/auth/signup`, { username, email, password }).pipe(
       tap((value) => {
         sessionStorage.setItem("auth-token", value.token);
+        sessionStorage.setItem("user-role", value.userRole);
       })
     );
   }
 
-  login(username: string, email: string, password: string): Observable<any> {
-    return this.http.post<LoginResponse>(`${this.baseUrl}/auth/login`, { username, email, password }).pipe(
+  login(email: string, password: string): Observable<any> {
+    return this.http.post<LoginResponse>(`${this.baseUrl}/auth/login`, { email, password }).pipe(
       tap((value) => {
         sessionStorage.setItem("auth-token", value.token);
+        sessionStorage.setItem("user-role", value.userRole);
       })
     );
   }
 
   logout(): void {
-    localStorage.removeItem('token');
+    sessionStorage.removeItem('token');
     this.logger.log("Token removed")
   }
 
   isLoggedIn(): boolean {
-    this.logger.log(`Is logged in: ${!!localStorage.getItem('token')}`);
-    return !!localStorage.getItem('token');
+    this.logger.log(`Is logged in: ${!!sessionStorage.getItem('token')}`);
+    return !!sessionStorage.getItem('token');
+  }
+
+  getUserRole(): string | null {
+    return sessionStorage.getItem('user-role');
+  }
+
+  hasRole(expectedRole: string): boolean {
+    return this.getUserRole()?.toLowerCase() === expectedRole.toLowerCase();
   }
 }
