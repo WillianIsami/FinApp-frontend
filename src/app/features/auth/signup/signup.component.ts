@@ -4,6 +4,7 @@ import { AuthService } from '../../../core/services/auth.service';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
 import { PrimaryInputComponent } from '../components/primary-input/primary-input.component';
+import { AuthLayoutComponent } from '../components/auth-layout/auth-layout.component';
 
 interface UserForm {
   username: FormControl,
@@ -17,6 +18,7 @@ interface UserForm {
   imports: [
     ReactiveFormsModule,
     PrimaryInputComponent,
+    AuthLayoutComponent
   ],
   templateUrl: './signup.component.html',
   styleUrl: './signup.component.scss'

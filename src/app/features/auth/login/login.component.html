@@ -1,5 +1,11 @@
-<div class="login-container">
-  <h2>Login</h2>
+<app-auth-layout
+  title="Login to your account"
+  primaryBtnText="Login Now"
+  secondaryBtnText="Don't have an account? SignUp here."
+  (submit)="login()"
+  (navigate)="navigate()"
+  [disablePrimaryBtn]="!userForm.valid"
+>
   <form [formGroup]="userForm">
     <app-primary-input
       formControlName="email"
@@ -17,7 +23,6 @@
       placeholder="Your password here"
     >
     </app-primary-input>
-    <button class="btn-primary" (click)="login()" [disabled]="!userForm.valid">Update Profile</button>
+    <span>Forgot password?</span>
   </form>
-  <button class="btn-secondary" (click)="navigate()">Don't have an account? SignUp here.</button>
-</div>
+</app-auth-layout>

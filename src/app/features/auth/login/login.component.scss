@@ -1,23 +1,16 @@
 @import '../../../../styles/variables.scss';
 
-button {
+form {
   width: 100%;
-  border-radius: 8px;
-  font-size: 16px;
-  font-weight: 500;
-  border: none;
-  background: transparent;
-  padding: 12px 24px;
-  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  margin-bottom: 34px;
 
-  &.btn-primary {
-    background-color: $primary-color;
-    color: white;
-    box-shadow:0px 8px 12px rgba(148.23004603385925, 64.33935597538948, 255, 0.20000000298023224);
-  }
-
-  &.btn-secondary {
-    border: 1px solid $primary-color;
-    color: $primary-color;
+  span {
+    font-size: 14px;
+    text-decoration: underline;
+    color: $secondary-color;
+    text-align: center;
   }
 }

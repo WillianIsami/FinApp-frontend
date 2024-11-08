@@ -4,6 +4,7 @@ import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angula
 import { ToastrService } from 'ngx-toastr';
 import { Router } from '@angular/router';
 import { PrimaryInputComponent } from '../components/primary-input/primary-input.component';
+import { AuthLayoutComponent } from '../components/auth-layout/auth-layout.component';
 
 interface UserForm {
   email: FormControl,
@@ -14,7 +15,8 @@ interface UserForm {
   standalone: true,
   imports: [
     ReactiveFormsModule,
-    PrimaryInputComponent
+    PrimaryInputComponent,
+    AuthLayoutComponent
   ],
   templateUrl: './login.component.html',
   styleUrl: './login.component.scss'

@@ -3,7 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Observable, tap } from 'rxjs';
 import { environment } from '../../../environment';
 import { Logger } from './logger.service';
-import { LoginResponse } from '../models/login-response.model';
+import { LoginResponse } from '../../shared/models/login-response.model';
 
 @Injectable({
   providedIn: 'root'
@@ -16,6 +16,10 @@ export class AuthService {
     private logger: Logger,
   ) {
     this.logger.log("AuthService initialized");
+  }
+
+  getToken(): string {
+    return sessionStorage.getItem('auth-token') as string;
   }
 
   signup(username: string, email: string, password: string): Observable<any> {
@@ -38,7 +42,7 @@ export class AuthService {
 
   logout(): void {
     sessionStorage.removeItem('token');
-    this.logger.log("Token removed")
+    this.logger.log("Token removed");
   }
 
   isLoggedIn(): boolean {
@@ -46,11 +50,14 @@ export class AuthService {
     return !!sessionStorage.getItem('token');
   }
 
-  getUserRole(): string | null {
-    return sessionStorage.getItem('user-role');
+  getUserRole(): string {
+    return sessionStorage.getItem("user-role") as string;
   }
 
-  hasRole(expectedRole: string): boolean {
-    return this.getUserRole()?.toLowerCase() === expectedRole.toLowerCase();
+  isAuthorized(role: string): boolean {
+    const roles = ['SELLER', 'MANAGER', 'BOSS'];
+    const userRole = this.getUserRole() || "";
+    console.log("userrole: ", userRole, typeof(userRole))
+    return roles.indexOf(userRole.toUpperCase()) >= roles.indexOf(role.toUpperCase());
   }
 }

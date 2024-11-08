@@ -1,0 +1,28 @@
+<c-header colorScheme="dark" class="bg-success">
+  <c-header-brand routerLink="/">
+    <svg cIcon name="cilListNumbered" size="xl" title="Numbered List Icon"></svg>
+    <svg cIcon name="cilPaperPlane" size="xl" title="Paper Plane Icon"></svg>
+    <svg cIcon name="cil-speedometer" size="xl" title="Paper Plane Icon"></svg>
+    <strong class="text-white">FinApp</strong>
+  </c-header-brand>
+
+  <c-header-nav>
+    <c-nav-item>
+      <a (click)="navigateFirstRoute()" class="nav-link text-white">{{ firstRoute }}</a>
+    </c-nav-item>
+    <c-nav-item>
+      <a (click)="navigateSecondRoute()" class="nav-link text-white">{{ secondRoute }}</a>
+    </c-nav-item>
+    <c-nav-item>
+      <a (click)="navigateThirdRoute()" class="nav-link text-white">{{ thirdRoute }}</a>
+    </c-nav-item>
+  </c-header-nav>
+
+  <c-header-nav class="ms-auto">
+    <c-nav-item>
+      <button cButton color="danger" class="px-4 text-white" (click)="logout()">
+        Logout
+      </button>
+    </c-nav-item>
+  </c-header-nav>
+</c-header>

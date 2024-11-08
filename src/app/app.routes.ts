@@ -1,7 +1,7 @@
 import { Routes } from '@angular/router';
 import { AuthGuard } from './core/guards/auth.guard';
-import { SignUpComponent } from './features/auth/signup/signup.component';
-import { LoginComponent } from './features/auth/login/login.component';
+import { NotFoundComponent } from './shared/components/not-found/not-found.component';
+import { RoleGuard } from './core/guards/role.guard';
 
 export const routes: Routes = [
   {
@@ -16,8 +16,31 @@ export const routes: Routes = [
   },
   {
     path: "seller",
-    // canActivate: [AuthGuard],
-    // data: { expectedRole: 'SELLER' },
-    component: LoginComponent
+    loadChildren: () =>
+      import('./features/seller/seller-routing.module').then(m => m.SellerRoutingModule),
+    canActivate: [AuthGuard, RoleGuard],
+    data: { expectedRole: "SELLER"}
   },
+  {
+    path: "manager",
+    loadChildren: () =>
+      import('./features/manager/manager-routing.module').then(m => m.ManagerRoutingModule),
+    canActivate: [AuthGuard, RoleGuard],
+    data: { expectedRole: "MANAGER"}
+  },
+  {
+    path: "boss",
+    loadChildren: () =>
+      import('./features/boss/boss-routing.module').then(m => m.BossRoutingModule),
+    canActivate: [AuthGuard, RoleGuard],
+    data: { expectedRole: "BOSS"}
+  },
+  {
+    path: '404',
+    component: NotFoundComponent
+  },
+  {
+    path: '**',
+    redirectTo: '404'
+  }
 ];
