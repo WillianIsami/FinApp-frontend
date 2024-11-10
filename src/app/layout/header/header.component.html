@@ -7,15 +7,13 @@
   </c-header-brand>
 
   <c-header-nav>
-    <c-nav-item>
-      <a (click)="navigateFirstRoute()" class="nav-link text-white">{{ firstRoute }}</a>
-    </c-nav-item>
-    <c-nav-item>
-      <a (click)="navigateSecondRoute()" class="nav-link text-white">{{ secondRoute }}</a>
-    </c-nav-item>
-    <c-nav-item>
-      <a (click)="navigateThirdRoute()" class="nav-link text-white">{{ thirdRoute }}</a>
-    </c-nav-item>
+    @for (route of allRoutes; track route.label) {
+      @if (route.roles.includes(userRole)) {
+        <c-nav-item>
+          <a (click)="navigate(route.path)" (keydown)="navigate(route.path)" tabindex="0" class="nav-link text-white" cNavLink>{{ route.label }}</a>
+        </c-nav-item>
+      }
+    }
   </c-header-nav>
 
   <c-header-nav class="ms-auto">

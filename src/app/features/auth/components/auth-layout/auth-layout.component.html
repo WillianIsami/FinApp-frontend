@@ -5,7 +5,7 @@
     <div class="btn-wrapper">
       <button
         class="btn-primary"
-        (click)="submit()"
+        (click)="emitSubmit()"
         [disabled]="disablePrimaryBtn"
       >
         {{ primaryBtnText }}
@@ -15,7 +15,7 @@
         <span>or</span>
         <div></div>
       </div>
-      <button class="btn-secondary" (click)="navigate()">{{ secondaryBtnText }}</button>
+      <button class="btn-secondary" (click)="emitNavigate()">{{ secondaryBtnText }}</button>
     </div>
   </section>
 </main>

@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthService } from '../../../core/services/auth.service';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
@@ -25,8 +25,6 @@ interface UserForm {
 })
 
 export class SignUpComponent {
-  @Input() errorMessage: string = '';
-  @Output() onSubmit = new EventEmitter();
   userForm!: FormGroup<UserForm>;
 
   constructor(

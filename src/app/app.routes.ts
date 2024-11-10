@@ -36,6 +36,13 @@ export const routes: Routes = [
     data: { expectedRole: "BOSS"}
   },
   {
+    path: "admin",
+    loadChildren: () =>
+      import('./features/admin/admin-routing.module').then(m => m.AdminRoutingModule),
+    canActivate: [AuthGuard, RoleGuard],
+    data: { expectedRole: "ADMIN"}
+  },
+  {
     path: '404',
     component: NotFoundComponent
   },

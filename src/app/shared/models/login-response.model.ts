@@ -1,4 +1,4 @@
-export type LoginResponse = {
-  token: string,
-  userRole: string,
+export interface LoginResponse {
+  token: string;
+  userRole: string;
 }

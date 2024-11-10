@@ -2,8 +2,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { AnalyticsComponent } from './components/analytics/analytics.component';
-import { CompanySettingsComponent } from './components/company-settings/company-settings.component';
-import { UserManagementComponent } from './components/user-management/user-management.component';
+import { PerformanceComponent } from './components/performance/performance.component';
 
 const routes: Routes = [
   {
@@ -15,12 +14,8 @@ const routes: Routes = [
     component: AnalyticsComponent
   },
   {
-    path: 'company-settings',
-    component: CompanySettingsComponent
-  },
-  {
-    path: 'user-management',
-    component: UserManagementComponent
+    path: 'performance',
+    component: PerformanceComponent
   }
 ];
 

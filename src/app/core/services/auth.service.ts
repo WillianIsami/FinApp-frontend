@@ -57,7 +57,7 @@ export class AuthService {
   isAuthorized(role: string): boolean {
     const roles = ['SELLER', 'MANAGER', 'BOSS'];
     const userRole = this.getUserRole() || "";
-    console.log("userrole: ", userRole, typeof(userRole))
+    this.logger.log(`userrole: ${userRole} - ${typeof(userRole)}`)
     return roles.indexOf(userRole.toUpperCase()) >= roles.indexOf(role.toUpperCase());
   }
 }

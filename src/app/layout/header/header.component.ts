@@ -1,8 +1,14 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { HeaderModule, NavModule, ButtonModule } from '@coreui/angular';
 import { IconDirective } from '@coreui/icons-angular';
 import { AuthService } from '../../core/services/auth.service';
+import { Router } from '@angular/router';
 
+interface NavRoute {
+  path: string;
+  label: string;
+  roles: string[];
+}
 
 @Component({
   selector: 'app-header',
@@ -17,31 +23,45 @@ import { AuthService } from '../../core/services/auth.service';
   styleUrl: './header.component.scss',
 })
 
-export class HeaderComponent {
-  constructor(private authService: AuthService) {}
-  @Input() firstRoute: string = "";
-  @Input() secondRoute: string = "";
-  @Input() thirdRoute: string = "";
+export class HeaderComponent implements OnInit {
+  userRole = "";
 
-  @Output("navigateFirst") onNavigateFirst = new EventEmitter();
-  @Output("navigateSecond") onNavigateSecond = new EventEmitter();
-  @Output("navigateThird") onNavigateThird = new EventEmitter();
+  constructor(private authService: AuthService, private router: Router) {}
+
+  ngOnInit() {
+    this.userRole = this.authService.getUserRole();
+  }
+
+  allRoutes: NavRoute[] = [
+    // Common routes
+    { path: '/home', label: 'Home', roles: ['SELLER', 'MANAGER', 'BOSS', 'ADMIN'] },
+    { path: '/about', label: 'About', roles: ['SELLER', 'MANAGER', 'BOSS', 'ADMIN'] },
+
+    // Seller routes
+    { path: '/seller/dashboard', label: 'Dashboard', roles: ['SELLER'] },
+    { path: '/seller/inventory', label: 'Inventory', roles: ['SELLER'] },
+    { path: '/seller/orders', label: 'Orders', roles: ['SELLER'] },
+
+    // Manager routes
+    { path: '/manager/dashboard', label: 'Dashboard', roles: ['MANAGER'] },
+    { path: '/manager/employees', label: 'Team Management', roles: ['MANAGER'] },
+    { path: '/manager/reports', label: 'Reports', roles: ['MANAGER'] },
+
+    // Boss routes
+    { path: '/boss/dashboard', label: 'Dashboard', roles: ['BOSS'] },
+    { path: '/boss/analytics', label: 'Analytics', roles: ['BOSS'] },
+    { path: '/boss/performance', label: 'Performance', roles: ['BOSS'] },
+
+    // Admin routes
+    { path: '/admin/settings', label: 'Settings', roles: ['ADMIN'] },
+  ];
+
 
   logout() {
     this.authService.logout();
   }
 
-  navigateFirstRoute() {
-    this.onNavigateFirst.emit()
+  navigate(path: string) {
+    this.router.navigate([path]);
   }
-
-  navigateSecondRoute() {
-    this.onNavigateSecond.emit()
-  }
-
-  navigateThirdRoute() {
-    this.onNavigateThird.emit()
-  }
-
-
 }

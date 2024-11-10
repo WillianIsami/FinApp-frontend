@@ -12,9 +12,9 @@ import { AuthService } from './core/services/auth.service';
   styleUrl: './app.component.scss'
 })
 
-export class AppComponent implements OnInit{
+export class AppComponent implements OnInit {
   title = 'FinApp-frontend';
-  isLoggedIn: boolean = false;
+  isLoggedIn = false;
 
   constructor(private authService: AuthService) {}
 

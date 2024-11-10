@@ -12,6 +12,7 @@ interface UserForm {
 }
 
 @Component({
+  selector: 'app-login',
   standalone: true,
   imports: [
     ReactiveFormsModule,

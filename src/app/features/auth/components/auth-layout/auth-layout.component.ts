@@ -8,19 +8,18 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
   styleUrl: './auth-layout.component.scss'
 })
 export class AuthLayoutComponent {
-  @Input() title: string = "";
-  @Input() primaryBtnText: string = "";
-  @Input() secondaryBtnText: string = "";
-  @Input() disablePrimaryBtn: boolean = true;
-  @Output("submit") onSubmit = new EventEmitter();
+  @Input() title = "";
+  @Input() primaryBtnText = "";
+  @Input() secondaryBtnText = "";
+  @Input() disablePrimaryBtn = true;
+  @Output() formSubmit = new EventEmitter();
+  @Output() navigate = new EventEmitter();
 
-  @Output("navigate") onNavigate = new EventEmitter();
-
-  submit(){
-    this.onSubmit.emit();
+  emitSubmit(){
+    this.formSubmit.emit();
   }
 
-  navigate(){
-    this.onNavigate.emit();
+  emitNavigate(){
+    this.navigate.emit();
   }
 }

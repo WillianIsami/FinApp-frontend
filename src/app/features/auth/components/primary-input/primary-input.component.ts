@@ -22,11 +22,11 @@ type InputTypes = "text" | "email" | "password"
 
 export class PrimaryInputComponent implements ControlValueAccessor {
   @Input() type: InputTypes = "text";
-  @Input() placeholder: string = "";
-  @Input() label: string = "";
-  @Input() inputName: string = "";
+  @Input() placeholder = "";
+  @Input() label = "";
+  @Input() inputName = "";
 
-  value: string = ''
+  value = ''
   onChange: any = () => {}
   onTouched: any = () => {}
 
