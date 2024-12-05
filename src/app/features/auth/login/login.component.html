@@ -2,9 +2,8 @@
   title="Login to your account"
   primaryBtnText="Login Now"
   secondaryBtnText="Don't have an account? SignUp here."
-  (submit)="login()"
+  (submit)="submit()"
   (navigate)="navigate()"
-  [disablePrimaryBtn]="!userForm.valid"
 >
   <form [formGroup]="userForm">
     <app-primary-input

@@ -11,15 +11,14 @@ export class AuthLayoutComponent {
   @Input() title = "";
   @Input() primaryBtnText = "";
   @Input() secondaryBtnText = "";
-  @Input() disablePrimaryBtn = true;
-  @Output() formSubmit = new EventEmitter();
-  @Output() navigate = new EventEmitter();
+  @Output('submit') onSubmit = new EventEmitter();
+  @Output('navigate') onNavigate = new EventEmitter();
 
   emitSubmit(){
-    this.formSubmit.emit();
+    this.onSubmit.emit();
   }
 
   emitNavigate(){
-    this.navigate.emit();
+    this.onNavigate.emit();
   }
 }

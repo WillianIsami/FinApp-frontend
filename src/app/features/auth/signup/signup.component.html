@@ -2,9 +2,8 @@
   title="Create your account"
   primaryBtnText="Signup Now"
   secondaryBtnText="Already have an account? Login here."
-  (submit)="signup()"
+  (submit)="submit()"
   (navigate)="navigate()"
-  [disablePrimaryBtn]="!userForm.valid"
 >
   <form [formGroup]="userForm">
     <app-primary-input
@@ -29,6 +28,14 @@
       type="password"
       label="Password"
       placeholder="Your password here"
+    >
+    </app-primary-input>
+    <app-primary-input
+      formControlName="passwordConfirm"
+      inputName="passwordConfirm"
+      type="password"
+      label="Confirm Password"
+      placeholder="Confirm your password here"
     >
     </app-primary-input>
   </form>

@@ -32,6 +32,7 @@ export class AuthService {
   }
 
   login(email: string, password: string): Observable<any> {
+    console.log("Logging:", email, password)
     return this.http.post<LoginResponse>(`${this.baseUrl}/auth/login`, { email, password }).pipe(
       tap((value) => {
         sessionStorage.setItem("auth-token", value.token);
